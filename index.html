@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FC Player Guesser</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:
+    linear-gradient(
+        135deg,
+        #051225,
+        #0a2540,
+        #123d6b
+    );
+    color:white;
+    padding:20px;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+
+    background:rgba(255,255,255,.04);
+
+    backdrop-filter:blur(10px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:25px;
+
+    padding:25px;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.35);
+}
+
+h1{
+    text-align:center;
+    font-size:3rem;
+    margin-bottom:25px;
+    letter-spacing:1px;
+}
+
+.controls{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+
+    padding:16px 28px;
+
+    border-radius:16px;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    transition:.25s;
+
+    min-width:260px;
+}
+
+#showBtn{
+    background:#14c9f3;
+    color:black;
+}
+
+#showBtn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px rgba(20,201,243,.4);
+}
+
+#finishBtn{
+    background:#ffd500;
+    color:black;
+}
+
+#finishBtn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 0 25px rgba(255,213,0,.4);
+}
+
+.counter{
+    text-align:center;
+    margin-top:25px;
+    margin-bottom:20px;
+    font-size:1.5rem;
+    font-weight:600;
+}
+
+.grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(4,minmax(120px,1fr));
+
+    gap:22px;
+
+    padding:20px;
+
+    justify-content:center;
+
+}
+
+.card{
+
+    width:100%;
+
+    aspect-ratio:2/3;
+
+    object-fit:cover;
+
+    border-radius:16px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    border:2px solid rgba(255,255,255,.08);
+
+    box-shadow:
+    0 8px 18px rgba(0,0,0,.35);
+
+}
+
+.card:hover{
+
+    transform:
+    translateY(-6px)
+    scale(1.03);
+
+    box-shadow:
+    0 0 25px rgba(0,212,255,.35);
+
+}
+
+.card.eliminated{
+
+    filter:grayscale(100%);
+
+    opacity:.25;
+
+    transform:scale(.94);
+
+}
+
+.popup-bg{
+
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.82);
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+
+}
+
+.popup{
+
+    width:min(90vw,380px);
+
+    background:#152743;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+
+    box-shadow:
+    0 0 40px rgba(0,212,255,.25);
+
+    animation:popup .25s ease;
+
+}
+
+.popup h2{
+
+    margin-bottom:15px;
+
+    font-size:1.8rem;
+
+}
+
+.popup img{
+
+    width:100%;
+
+    border-radius:15px;
+
+}
+
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+@media(max-width:900px){
+
+    .grid{
+
+        grid-template-columns:
+        repeat(4,1fr);
+
+        gap:16px;
+
+        padding:15px;
+
+    }
+
+}
+
+@media(max-width:600px){
+
+    body{
+        padding:10px;
+    }
+
+    .container{
+        padding:15px;
+    }
+
+    h1{
+        font-size:2.2rem;
+    }
+
+    .grid{
+
+        grid-template-columns:
+        repeat(4,1fr);
+
+        gap:12px;
+
+        padding:10px;
+
+    }
+
+    button{
+        width:100%;
+        min-width:unset;
+    }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>⚽ FC PLAYER GUESSER</h1>
+
+<div class="controls">
+
+<button id="showBtn">
+See Your Player
+</button>
+
+<button id="finishBtn">
+Finish Game
+</button>
+
+</div>
+
+<div class="counter">
+Remaining Players:
+<span id="remaining">20</span>
+</div>
+
+<div class="grid" id="grid"></div>
+
+</div>
+
+<div class="popup-bg" id="popupBg">
+
+<div class="popup">
+
+<h2>Your Secret Player</h2>
+
+<img id="popupImg">
+
+</div>
+
+</div>
+
+<script>
+
+const players = [
+
+"players/player1.png",
+"players/player2.png",
+"players/player3.png",
+"players/player4.png",
+"players/player5.png",
+"players/player6.png",
+"players/player7.png",
+"players/player8.png",
+"players/player9.png",
+"players/player10.png",
+"players/player11.png",
+"players/player12.png",
+"players/player13.png",
+"players/player14.png",
+"players/player15.png",
+"players/player16.png",
+"players/player17.png",
+"players/player18.png",
+"players/player19.png",
+"players/player20.png"
+
+];
+
+const grid =
+document.getElementById("grid");
+
+const remaining =
+document.getElementById("remaining");
+
+let currentPlayer = null;
+let previousPlayer = null;
+
+players.forEach(src=>{
+
+    const img =
+    document.createElement("img");
+
+    img.src = src;
+
+    img.className = "card";
+
+    img.addEventListener("click",()=>{
+
+        img.classList.toggle("eliminated");
+
+        updateCounter();
+
+    });
+
+    grid.appendChild(img);
+
+});
+
+function updateCounter(){
+
+    const count =
+    document.querySelectorAll(
+        ".card:not(.eliminated)"
+    ).length;
+
+    remaining.textContent = count;
+
+}
+
+updateCounter();
+
+function generatePlayer(){
+
+    let available =
+    players.filter(
+        p => p !== previousPlayer
+    );
+
+    currentPlayer =
+    available[
+        Math.floor(
+            Math.random()*available.length
+        )
+    ];
+
+    previousPlayer =
+    currentPlayer;
+
+}
+
+const popupBg =
+document.getElementById("popupBg");
+
+const popupImg =
+document.getElementById("popupImg");
+
+document
+.getElementById("showBtn")
+.addEventListener("click",()=>{
+
+    if(currentPlayer===null){
+
+        generatePlayer();
+
+    }
+
+    popupImg.src =
+    currentPlayer;
+
+    popupBg.style.display =
+    "flex";
+
+});
+
+popupBg.addEventListener("click",(e)=>{
+
+    if(e.target===popupBg){
+
+        popupBg.style.display =
+        "none";
+
+    }
+
+});
+
+document
+.getElementById("finishBtn")
+.addEventListener("click",()=>{
+
+    document
+    .querySelectorAll(".card")
+    .forEach(card=>{
+
+        card.classList.remove(
+            "eliminated"
+        );
+
+    });
+
+    currentPlayer = null;
+
+    updateCounter();
+
+    alert(
+        "New round started! Click 'See Your Player'."
+    );
+
+});
+
+</script>
+
+</body>
+</html>
