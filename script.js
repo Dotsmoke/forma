@@ -1,5 +1,5 @@
 /* =========================================================
-   NOIRÉ — script.js
+   MOTIF — script.js
    Vanilla JS only. No dependencies.
    ========================================================= */
 (function(){
@@ -7,89 +7,67 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* -------------------------------------------------------
-     PRODUCT DATA
-     Replace image URLs / copy here to swap in real catalog.
-  ------------------------------------------------------- */
   var PRODUCTS = [
     {
-      id: 'noma-lounge',
-      name: 'Noma Lounge Chair',
-      material: 'Bouclé / solid oak',
-      price: 24900,
+      id: 'kolt-chair',
+      name: 'Kolt Lounge Chair',
+      material: 'Cobalt boucle / oak',
+      price: 26900,
       tag: 'Bestseller',
       size: 'lg',
-      img: 'https://images.unsplash.com/photo-1506898667547-42e22a46e125?q=80&w=1200&auto=format&fit=crop',
-      desc: 'A deep-seated lounge chair built around a solid oak frame, upholstered in undyed bouclé that softens with every year of use.'
+      img: 'https://images.unsplash.com/photo-1567016432779-094069958ea5?q=80&w=1200&auto=format&fit=crop',
+      desc: 'A deep-seated chair in cobalt bouclé over a solid oak frame — the piece a room gets built around.'
     },
     {
-      id: 'aster-side',
-      name: 'Aster Side Table',
-      material: 'Walnut veneer',
-      price: 8900,
+      id: 'orb-table',
+      name: 'Orb Side Table',
+      material: 'Lacquered ash',
+      price: 9400,
       tag: 'New',
       size: 'sm',
-      img: 'https://images.unsplash.com/photo-1499933374294-4584851497cc?q=80&w=1000&auto=format&fit=crop',
-      desc: 'A quietly sculptural side table in book-matched walnut veneer, finished with a hand-rubbed natural oil.'
+      img: 'https://images.unsplash.com/photo-1533090161767-e6ffed986c88?q=80&w=1000&auto=format&fit=crop',
+      desc: 'A sculptural drum table in mustard lacquer, sized to sit a lamp, a drink, or a stack of books.'
     },
     {
-      id: 'linden-sofa',
-      name: 'Linden 3-Seat Sofa',
-      material: 'Linen / ash frame',
-      price: 64900,
+      id: 'clash-sofa',
+      name: 'Clash 3-Seat Sofa',
+      material: 'Tomato linen / ash',
+      price: 68900,
       tag: null,
       size: 'wide',
       img: 'https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?q=80&w=1400&auto=format&fit=crop',
-      desc: 'Low-slung and generously cushioned, the Linden seats three in stonewashed linen over a solid ash frame.'
+      desc: 'Low, wide, and upholstered in saturated tomato linen over a solid ash frame — built to be the loudest thing in the room.'
     },
     {
-      id: 'oslo-stool',
-      name: 'Oslo Stool',
+      id: 'nub-stool',
+      name: 'Nub Stool',
       material: 'Solid beech',
-      price: 5400,
+      price: 5800,
       tag: null,
       size: 'sm',
       img: 'https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?q=80&w=1000&auto=format&fit=crop',
-      desc: 'A one-piece steam-bent stool in solid beech, equally at home as a seat, a side table, or a plant stand.'
+      desc: 'A one-piece steam-bent stool in solid beech with a moss-lacquered seat edge.'
     },
     {
-      id: 'harbor-bed',
-      name: 'Harbor Bed Frame',
-      material: 'Solid oak',
-      price: 41900,
+      id: 'grid-bed',
+      name: 'Grid Bed Frame',
+      material: 'Solid oak / cobalt trim',
+      price: 43900,
       tag: 'New',
       size: 'sm',
-      img: 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?q=80&w=1000&auto=format&fit=crop',
-      desc: 'A low, architectural bed frame in solid oak with a gently splayed headboard and concealed slat base.'
+      img: 'https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?q=80&w=1000&auto=format&fit=crop',
+      desc: 'A low, architectural bed frame in solid oak with a cobalt-lacquered headboard edge.'
     }
   ];
 
   var CART_COUNT = 0;
 
-  /* -------------------------------------------------------
-     UTIL
-  ------------------------------------------------------- */
-  function formatPrice(n){
-    return '₹' + n.toLocaleString('en-IN');
-  }
-  function trapFocus(container){
-    var focusable = container.querySelectorAll('a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])');
-    return focusable;
-  }
+  function formatPrice(n){ return '₹' + n.toLocaleString('en-IN'); }
 
   /* -------------------------------------------------------
-     NAV: scroll compact state
+     NAV
   ------------------------------------------------------- */
-  var nav = document.querySelector('.floating-nav');
-  var lastY = 0;
-  function onScroll(){
-    var y = window.scrollY;
-    if (y > 40) nav.classList.add('is-scrolled');
-    else nav.classList.remove('is-scrolled');
-    lastY = y;
-    handleParallax();
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
+  /* header is a static sticky bar in this design — no scroll transform needed */
 
   /* -------------------------------------------------------
      MOBILE MENU
@@ -118,9 +96,7 @@
   hamburgerBtn.addEventListener('click', openMenu);
   closeMenuBtn.addEventListener('click', closeMenu);
   menuScrim.addEventListener('click', closeMenu);
-  mobileMenu.querySelectorAll('a').forEach(function(a){
-    a.addEventListener('click', closeMenu);
-  });
+  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMenu();
   });
@@ -138,7 +114,7 @@
           '<div class="pc-media">' +
             (p.tag ? '<span class="' + tagClass + '">' + p.tag + '</span>' : '') +
             '<button class="pc-wish" type="button" aria-label="Add ' + p.name + ' to wishlist" data-role="wish">' +
-              '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7.5-4.6-10-9.3C.5 7.3 2.4 4 6 4c2.1 0 3.6 1.2 6 3.6C14.4 5.2 15.9 4 18 4c3.6 0 5.5 3.3 4 6.7C19.5 15.4 12 20 12 20z"/></svg>' +
+              '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7.5-4.6-10-9.3C.5 7.3 2.4 4 6 4c2.1 0 3.6 1.2 6 3.6C14.4 5.2 15.9 4 18 4c3.6 0 5.5 3.3 4 6.7C19.5 15.4 12 20 12 20z"/></svg>' +
             '</button>' +
             '<img loading="lazy" src="' + p.img + '" alt="' + p.name + ', ' + p.material + '">' +
           '</div>' +
@@ -167,19 +143,14 @@
     CART_COUNT += 1;
     cartCountEl.textContent = CART_COUNT;
     cartCountEl.classList.add('show');
-    cartToggle.classList.remove('bump');
-    void cartToggle.offsetWidth; // restart animation
-    cartToggle.classList.add('bump');
+    cartToggle.classList.remove('bump'); void cartToggle.offsetWidth; cartToggle.classList.add('bump');
 
-    toastImg.src = product.img;
-    toastImg.alt = '';
+    toastImg.src = product.img; toastImg.alt = '';
     toast.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 2400);
 
-    if (!reduceMotion && sourceEl){
-      flyToCart(sourceEl, product.img);
-    }
+    if (!reduceMotion && sourceEl) flyToCart(sourceEl, product.img);
   }
 
   function flyToCart(sourceEl, imgSrc){
@@ -188,18 +159,18 @@
     var flyer = document.createElement('img');
     flyer.src = imgSrc;
     flyer.style.cssText = 'position:fixed;z-index:600;width:38px;height:38px;border-radius:50%;object-fit:cover;pointer-events:none;' +
-      'left:' + srcRect.left + 'px;top:' + srcRect.top + 'px;transition:transform .6s cubic-bezier(.22,.61,.36,1), opacity .6s ease;';
+      'left:' + srcRect.left + 'px;top:' + srcRect.top + 'px;border:2px solid #17151C;' +
+      'transition:transform .6s cubic-bezier(.16,.84,.44,1), opacity .6s ease;';
     document.body.appendChild(flyer);
     requestAnimationFrame(function(){
       var dx = destRect.left - srcRect.left;
       var dy = destRect.top - srcRect.top;
-      flyer.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.2)';
+      flyer.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(.2) rotate(20deg)';
       flyer.style.opacity = '0.4';
     });
     setTimeout(function(){ flyer.remove(); }, 650);
   }
 
-  /* Delegate add-to-cart + wishlist + card open clicks */
   grid.addEventListener('click', function(e){
     var addBtn = e.target.closest('[data-role="add"]');
     var wishBtn = e.target.closest('[data-role="wish"]');
@@ -251,11 +222,9 @@
 
   function openQuickView(product){
     currentProduct = product;
-    qty = 1;
-    qtyValue.textContent = qty;
-    qvImg.src = product.img;
-    qvImg.alt = product.name;
-    qvTag.textContent = product.tag || 'Noiré Studio';
+    qty = 1; qtyValue.textContent = qty;
+    qvImg.src = product.img; qvImg.alt = product.name;
+    qvTag.textContent = product.tag || 'Motif Studio';
     qvName.textContent = product.name;
     qvMaterial.textContent = product.material;
     qvDesc.textContent = product.desc;
@@ -284,33 +253,12 @@
   qtyPlus.addEventListener('click', function(){ qty = Math.min(9, qty + 1); qtyValue.textContent = qty; });
   qvAdd.addEventListener('click', function(){
     qvAdd.classList.remove('clicked'); void qvAdd.offsetWidth; qvAdd.classList.add('clicked');
-    for (var i=0;i<qty;i++) CART_COUNT += 0; // qty already reflected in single add for simplicity
     addToCart(currentProduct, qvAdd);
     closeQuickView();
   });
 
   /* -------------------------------------------------------
-     SCROLL REVEALS (IntersectionObserver)
-  ------------------------------------------------------- */
-  document.querySelectorAll('.statement-text, .why-item').forEach(function(el){
-    el.classList.add('io-reveal');
-  });
-  if ('IntersectionObserver' in window && !reduceMotion){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if (entry.isIntersecting){
-          entry.target.classList.add('in-view');
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('.io-reveal').forEach(function(el){ io.observe(el); });
-  } else {
-    document.querySelectorAll('.io-reveal').forEach(function(el){ el.classList.add('in-view'); });
-  }
-
-  /* -------------------------------------------------------
-     CINEMATIC PARALLAX (vanilla JS, disabled under reduced motion
+     DUOTONE PARALLAX (vanilla JS, disabled under reduced motion
      and simplified on small screens)
   ------------------------------------------------------- */
   var cinematic = document.getElementById('cinematic');
@@ -320,26 +268,11 @@
     var rect = cinematic.getBoundingClientRect();
     var vh = window.innerHeight;
     if (rect.bottom < 0 || rect.top > vh) return;
-    var progress = (vh - rect.top) / (vh + rect.height); // 0 -> 1
-    var shift = (progress - 0.5) * 60; // px
+    var progress = (vh - rect.top) / (vh + rect.height);
+    var shift = (progress - 0.5) * 60;
     parallaxImg.style.transform = 'translateY(' + shift.toFixed(1) + 'px) scale(1.08)';
   }
-
-  /* -------------------------------------------------------
-     HERO POINTER MICRO-MOVEMENT (desktop only)
-  ------------------------------------------------------- */
-  var heroMedia = document.querySelector('.hero-media');
-  if (heroMedia && !reduceMotion && window.matchMedia('(hover:hover)').matches){
-    heroMedia.addEventListener('mousemove', function(e){
-      var rect = heroMedia.getBoundingClientRect();
-      var x = (e.clientX - rect.left) / rect.width - 0.5;
-      var y = (e.clientY - rect.top) / rect.height - 0.5;
-      heroMedia.style.transform = 'translate(' + (x * -8).toFixed(1) + 'px,' + (y * -8).toFixed(1) + 'px)';
-    });
-    heroMedia.addEventListener('mouseleave', function(){
-      heroMedia.style.transform = 'translate(0,0)';
-    });
-  }
+  window.addEventListener('scroll', handleParallax, { passive: true });
 
   /* -------------------------------------------------------
      TESTIMONIAL CAROUSEL
@@ -382,5 +315,5 @@
   /* -------------------------------------------------------
      INIT
   ------------------------------------------------------- */
-  onScroll();
+  handleParallax();
 })();
