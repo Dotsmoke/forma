@@ -3,449 +3,471 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>FC Player Guesser</title>
-
-<style>
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Segoe UI',sans-serif;
-}
-
-body{
-    min-height:100vh;
-    background:
-    linear-gradient(
-        135deg,
-        #051225,
-        #0a2540,
-        #123d6b
-    );
-    color:white;
-    padding:20px;
-}
-
-.container{
-    max-width:1200px;
-    margin:auto;
-
-    background:rgba(255,255,255,.04);
-
-    backdrop-filter:blur(10px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    border-radius:25px;
-
-    padding:25px;
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.35);
-}
-
-h1{
-    text-align:center;
-    font-size:3rem;
-    margin-bottom:25px;
-    letter-spacing:1px;
-}
-
-.controls{
-    display:flex;
-    justify-content:center;
-    gap:15px;
-    flex-wrap:wrap;
-}
-
-button{
-    border:none;
-    cursor:pointer;
-
-    padding:16px 28px;
-
-    border-radius:16px;
-
-    font-size:20px;
-
-    font-weight:700;
-
-    transition:.25s;
-
-    min-width:260px;
-}
-
-#showBtn{
-    background:#14c9f3;
-    color:black;
-}
-
-#showBtn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 25px rgba(20,201,243,.4);
-}
-
-#finishBtn{
-    background:#ffd500;
-    color:black;
-}
-
-#finishBtn:hover{
-    transform:translateY(-3px);
-    box-shadow:0 0 25px rgba(255,213,0,.4);
-}
-
-.counter{
-    text-align:center;
-    margin-top:25px;
-    margin-bottom:20px;
-    font-size:1.5rem;
-    font-weight:600;
-}
-
-.grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-
-    gap:28px;
-
-    padding:30px;
-
-    max-width:1100px;
-
-    margin:auto;
-}
-
-.card{
-    width:100%;
-
-    aspect-ratio:1/1;
-
-    object-fit:cover;
-
-    border-radius:20px;
-
-    border:3px solid rgba(255,255,255,.12);
-
-    cursor:pointer;
-
-    transition:.25s;
-
-    box-shadow:
-    0 10px 25px rgba(0,0,0,.4);
-}
-@media(max-width:900px){
-
-    .grid{
-        grid-template-columns:repeat(3,1fr);
-        gap:18px;
-    }
-
-}
-
-@media(max-width:600px){
-
-    .grid{
-        grid-template-columns:repeat(3,1fr);
-        gap:14px;
-        padding:15px;
-    }
-
-}
-
-.card:hover{
-
-    transform:
-    translateY(-6px)
-    scale(1.03);
-
-    box-shadow:
-    0 0 25px rgba(0,212,255,.35);
-
-}
-
-.card.eliminated{
-
-    filter:grayscale(100%);
-
-    opacity:.25;
-
-    transform:scale(.94);
-
-}
-
-.popup-bg{
-
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.82);
-
-    display:none;
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:999;
-
-}
-
-.popup{
-
-    width:min(90vw,380px);
-
-    background:#152743;
-
-    border-radius:25px;
-
-    padding:25px;
-
-    text-align:center;
-
-    box-shadow:
-    0 0 40px rgba(0,212,255,.25);
-
-    animation:popup .25s ease;
-
-}
-
-.popup h2{
-
-    margin-bottom:15px;
-
-    font-size:1.8rem;
-
-}
-
-.popup img{
-
-    width:100%;
-
-    border-radius:15px;
-
-}
-
-@keyframes popup{
-
-    from{
-        opacity:0;
-        transform:scale(.8);
-    }
-
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-
-}
-
-@media(max-width:1100px){
-
-    .grid{
-        grid-template-columns:repeat(4,1fr);
-    }
-
-}
-
-@media(max-width:800px){
-
-    .grid{
-        grid-template-columns:repeat(3,1fr);
-        gap:14px;
-    }
-
-}
-
-@media(max-width:500px){
-
-    .grid{
-        grid-template-columns:repeat(3,1fr);
-        gap:10px;
-    }
-
-    button{
-        width:100%;
-        min-width:unset;
-    }
-
-}
-
-</style>
+<title>ORIEL — Furniture for architectural living</title>
+<meta name="description" content="ORIEL designs furniture that defines how a room feels — solid materials, editorial craft, delivered across India.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
 </head>
-
 <body>
 
-<div class="container">
-
-<h1>⚽ FC PLAYER GUESSER</h1>
-
-<div class="controls">
-
-<button id="showBtn">
-See Your Player
-</button>
-
-<button id="finishBtn">
-Finish Game
-</button>
-
+<!-- ============================== ANNOUNCEMENT ============================== -->
+<div class="announce">
+  <div class="announce-track">
+    <span>MONSOON SALE IS LIVE</span><span>FREE DELIVERY ACROSS INDIA</span><span>COD AVAILABLE</span>
+    <span>MONSOON SALE IS LIVE</span><span>FREE DELIVERY ACROSS INDIA</span><span>COD AVAILABLE</span>
+  </div>
 </div>
 
-<div class="counter">
-Remaining Players:
-<span id="remaining">27</span>
+<!-- ============================== NAVIGATION ============================== -->
+<header id="siteHeader">
+  <div class="navbar">
+    <a href="#top" class="nav-logo">ORIEL</a>
+    <nav class="nav-links">
+      <a href="#top">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#collections">Collections</a>
+      <a href="#craft">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn" id="searchBtn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </button>
+      <button class="icon-btn" aria-label="Wishlist">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 21s-7.5-4.6-10-9.3C.5 8 2 4 6 4c2.2 0 3.7 1.3 4.6 2.6C11.5 5.3 13 4 15.2 4c4 0 5.5 4 4 7.7C19.5 16.4 12 21 12 21z"/></svg>
+        <span class="icon-count" id="wishCount">0</span>
+      </button>
+      <button class="icon-btn" id="cartBtn" aria-label="Shopping bag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 8h12l-1 12H7L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+        <span class="icon-count" id="cartCount">0</span>
+      </button>
+    </div>
+    <button class="burger" id="burgerBtn" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<!-- ============================== MOBILE MENU ============================== -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-top">
+    <span class="nav-logo">ORIEL</span>
+    <button class="close-btn" id="mobileMenuClose" aria-label="Close menu"><span></span><span></span></button>
+  </div>
+  <nav>
+    <a href="#top">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#collections">Collections</a>
+    <a href="#craft">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="mobile-menu-foot">
+    <span>hello@oriel.in</span>
+    <span>+91 80000 00000</span>
+  </div>
 </div>
 
-<div class="grid" id="grid"></div>
+<main id="top">
 
+  <!-- ============================== HERO ============================== -->
+  <section class="hero">
+    <div class="hero-copy">
+      <span class="label">The new collection</span>
+      <h1>Objects that make a space feel like <i>home.</i></h1>
+      <p class="lede">ORIEL designs furniture around how rooms are actually lived in — not how they photograph. Solid materials, considered proportions, made to be used for decades.</p>
+      <div class="hero-ctas">
+        <a href="#shop" class="btn btn-primary">Explore collection <svg viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5.5h13M8 1l5 4.5-5 4.5"/></svg></a>
+        <a href="#collections" class="btn btn-outline">View lookbook</a>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=1400&q=80" alt="A sunlit living room styled with an ORIEL sofa and accent chair">
+      <div class="hero-float">
+        <span class="dot"></span>
+        <div>
+          <strong>Noma Lounge Sofa</strong>
+          <span>Boucle wool · ₹68,500</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== BRAND STATEMENT ============================== -->
+  <section class="statement">
+    <div class="wrap statement-inner">
+      <h2 class="reveal-on-scroll reveal">Furniture should not simply fill a room. It should define how the room feels.</h2>
+      <div class="statement-details reveal-on-scroll reveal">
+        <div><span class="label">01</span><p>Crafted with intention</p></div>
+        <div><span class="label">02</span><p>Designed for everyday living</p></div>
+        <div><span class="label">03</span><p>Delivered across India</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== COLLECTION (CATEGORIES) ============================== -->
+  <section class="collection section" id="collections">
+    <div class="wrap">
+      <div class="section-head reveal-on-scroll reveal">
+        <h2>Explore the collection</h2>
+        <p class="sub">Five categories, one point of view — pieces designed to sit together, not just side by side.</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="cat-grid reveal-on-scroll reveal">
+        <a href="#shop" class="cat-cell cell-living" data-cat-link="living">
+          <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=900&q=80" alt="Living room furniture">
+          <span class="n">01</span><h3>Living Room</h3>
+          <span class="arrow"><svg viewBox="0 0 13 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 5h11M6 1l5 4-5 4"/></svg></span>
+        </a>
+        <a href="#shop" class="cat-cell cell-dining" data-cat-link="dining">
+          <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?auto=format&fit=crop&w=900&q=80" alt="Dining room furniture">
+          <span class="n">02</span><h3>Dining</h3>
+          <span class="arrow"><svg viewBox="0 0 13 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 5h11M6 1l5 4-5 4"/></svg></span>
+        </a>
+        <a href="#shop" class="cat-cell cell-bedroom" data-cat-link="bedroom">
+          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=700&q=80" alt="Bedroom furniture">
+          <span class="n">03</span><h3>Bedroom</h3>
+          <span class="arrow"><svg viewBox="0 0 13 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 5h11M6 1l5 4-5 4"/></svg></span>
+        </a>
+        <a href="#shop" class="cat-cell cell-office" data-cat-link="office">
+          <img src="https://images.unsplash.com/photo-1594620302200-9a762244a156?auto=format&fit=crop&w=700&q=80" alt="Home office furniture">
+          <span class="n">04</span><h3>Office</h3>
+          <span class="arrow"><svg viewBox="0 0 13 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 5h11M6 1l5 4-5 4"/></svg></span>
+        </a>
+        <a href="#shop" class="cat-cell cell-storage" data-cat-link="storage">
+          <img src="https://images.unsplash.com/photo-1595428774223-ef52624120d2?auto=format&fit=crop&w=700&q=80" alt="Storage furniture">
+          <span class="n">05</span><h3>Storage</h3>
+          <span class="arrow"><svg viewBox="0 0 13 10" fill="none" stroke="currentColor" stroke-width="1.3"><path d="M0 5h11M6 1l5 4-5 4"/></svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== FEATURED PRODUCTS ============================== -->
+  <section class="section" id="shop">
+    <div class="wrap">
+      <div class="section-head reveal-on-scroll reveal">
+        <h2>The current edit</h2>
+        <p class="sub">Twelve pieces, filterable by room — sorted however you shop.</p>
+      </div>
+
+      <div class="filter-bar">
+        <div class="filter-pills">
+          <button class="pill active" data-filter="all">All</button>
+          <button class="pill" data-filter="living">Living</button>
+          <button class="pill" data-filter="bedroom">Bedroom</button>
+          <button class="pill" data-filter="dining">Dining</button>
+          <button class="pill" data-filter="office">Office</button>
+          <button class="pill" data-filter="storage">Storage</button>
+        </div>
+        <select class="sort-select" id="sortSelect">
+          <option value="featured">Featured</option>
+          <option value="newest">Newest</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+        </select>
+      </div>
+
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+  </section>
+
+  <!-- ============================== LOOKBOOK ============================== -->
+  <section class="lookbook section">
+    <div class="wrap">
+      <div class="section-head reveal-on-scroll reveal">
+        <h2>Spaces worth coming home to.</h2>
+        <p class="sub">A closer look at how each piece behaves in a real room, not a studio.</p>
+      </div>
+      <div class="collage reveal-on-scroll reveal">
+        <div class="collage-item c-1">
+          <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=900&q=80" alt="Living room styled with the Noma sofa">
+          <div class="reveal-tag"><strong>Noma Lounge Sofa</strong><span>Explore →</span></div>
+        </div>
+        <div class="collage-item c-2">
+          <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=700&q=80" alt="Dining setting with the Oslo table">
+          <div class="reveal-tag"><strong>Oslo Oak Table</strong><span>Explore →</span></div>
+        </div>
+        <div class="collage-item c-3">
+          <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="Bedroom styled with the Haven bed">
+          <div class="reveal-tag"><strong>Haven Bed</strong><span>Explore →</span></div>
+        </div>
+        <div class="collage-item c-4">
+          <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=700&q=80" alt="Reading corner with the Arc accent chair">
+          <div class="reveal-tag"><strong>Arc Accent Chair</strong><span>Explore →</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== SIGNATURE PIECE ============================== -->
+  <section class="signature">
+    <div class="sig-media reveal-on-scroll reveal">
+      <img src="https://images.unsplash.com/photo-1567016432779-094069958ea5?auto=format&fit=crop&w=1200&q=80" alt="The Eden sofa in a warm-toned living room">
+    </div>
+    <div class="sig-copy reveal-on-scroll reveal">
+      <span class="label">01 / Signature piece</span>
+      <h2>The Eden Sofa</h2>
+      <p class="desc">Built on a kiln-dried hardwood frame with eight-way hand-tied springs, the Eden is upholstered in a nubby weave that softens with use rather than wearing thin.</p>
+      <div class="sig-specs">
+        <div><span>Material</span><span>Hardwood frame, wool-blend upholstery</span></div>
+        <div><span>Dimensions</span><span>228 × 96 × 84 cm</span></div>
+        <div><span>Finishes</span><span>Oat, Moss, Charcoal</span></div>
+      </div>
+      <div class="sig-price">₹72,000</div>
+      <a href="#shop" class="btn btn-outline">Discover the piece <svg viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5.5h13M8 1l5 4.5-5 4.5"/></svg></a>
+    </div>
+  </section>
+
+  <!-- ============================== WHY CHOOSE US ============================== -->
+  <section class="principles section">
+    <div class="wrap">
+      <div class="principles-head reveal-on-scroll reveal">
+        <span class="label">Made for real homes</span>
+        <h2>Not everything needs a compromise.</h2>
+      </div>
+      <div class="principle-list reveal-on-scroll reveal">
+        <div class="principle">
+          <span class="num">01</span>
+          <h3>Thoughtful Materials</h3>
+          <p>Solid woods and natural upholstery, sourced for how they age — not just how they photograph on day one.</p>
+        </div>
+        <div class="principle">
+          <span class="num">02</span>
+          <h3>Built for Everyday Life</h3>
+          <p>Frames tested for real use: kids on the sofa, chairs pulled out fast, drawers opened a hundred times a week.</p>
+        </div>
+        <div class="principle">
+          <span class="num">03</span>
+          <h3>Designed to Last</h3>
+          <p>Fewer, better pieces. Every design stays in the collection for years so parts and finishes remain available.</p>
+        </div>
+        <div class="principle">
+          <span class="num">04</span>
+          <h3>Delivered With Care</h3>
+          <p>White-glove delivery and assembly in 40+ cities, with padded transit for everywhere else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== MATERIAL / CRAFT ============================== -->
+  <section class="material-section section" id="craft">
+    <div class="wrap">
+      <div class="section-head reveal-on-scroll reveal">
+        <h2>What it's made of</h2>
+        <p class="sub">Four materials, chosen and finished in-house.</p>
+      </div>
+      <div class="material-layout reveal-on-scroll reveal">
+        <div class="material-tabs">
+          <button class="mtab active" data-material="wood">
+            <span class="mtab-row"><span>Wood</span><span class="mtab-plus">+</span></span>
+            <span class="mtab-desc">Natural textures, carefully selected for warmth and longevity — kiln-dried hardwood that resists warping through Indian summers.</span>
+          </button>
+          <button class="mtab" data-material="fabric">
+            <span class="mtab-row"><span>Fabric</span><span class="mtab-plus">+</span></span>
+            <span class="mtab-desc">Woven from wool-blend and heavyweight cotton, tested for pilling and fade before it reaches a single cushion.</span>
+          </button>
+          <button class="mtab" data-material="metal">
+            <span class="mtab-row"><span>Metal</span><span class="mtab-plus">+</span></span>
+            <span class="mtab-desc">Powder-coated steel legs and brass hardware, used where strength matters more than mass.</span>
+          </button>
+          <button class="mtab" data-material="finish">
+            <span class="mtab-row"><span>Finishes</span><span class="mtab-plus">+</span></span>
+            <span class="mtab-desc">Hand-rubbed oils and low-VOC lacquers applied in three thin coats, never one thick one.</span>
+          </button>
+        </div>
+        <div class="material-media">
+          <img data-material="wood" class="active" src="https://images.unsplash.com/photo-1509644851169-2acc08aa25b5?auto=format&fit=crop&w=900&q=80" alt="Close-up of oak wood grain">
+          <img data-material="fabric" src="https://images.unsplash.com/photo-1620826320335-e8b8b5ebde3e?auto=format&fit=crop&w=900&q=80" alt="Close-up of woven upholstery fabric">
+          <img data-material="metal" src="https://images.unsplash.com/photo-1531971589569-0d9370cbe1e5?auto=format&fit=crop&w=900&q=80" alt="Close-up of brushed brass hardware">
+          <img data-material="finish" src="https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=900&q=80" alt="Close-up of oiled wood finish">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== TESTIMONIALS ============================== -->
+  <section class="testimonial-section section">
+    <div class="wrap">
+      <div class="t-track">
+        <div class="t-slide active">
+          <blockquote>"Exactly the piece our living room was missing. It looks like it was made for the space."</blockquote>
+          <cite>— Ananya, Kochi</cite>
+        </div>
+        <div class="t-slide">
+          <blockquote>"Four years in and the dining table still looks brand new. Worth every rupee."</blockquote>
+          <cite>— Rohan, Pune</cite>
+        </div>
+        <div class="t-slide">
+          <blockquote>"The delivery team treated our sofa like it was their own. Small thing, but it mattered."</blockquote>
+          <cite>— Meera, Bengaluru</cite>
+        </div>
+      </div>
+      <div class="t-dots">
+        <button class="t-dot active"></button>
+        <button class="t-dot"></button>
+        <button class="t-dot"></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== INSTAGRAM / SOCIAL ============================== -->
+  <section class="section" style="padding-top:0;">
+    <div class="wrap">
+      <div class="section-head reveal-on-scroll reveal">
+        <h2>Seen in real spaces.</h2>
+        <p class="sub">Tag @oriel.living to be featured.</p>
+      </div>
+      <div class="social-grid reveal-on-scroll reveal">
+        <div class="social-item"><img src="https://images.unsplash.com/photo-1615529182904-14819c35db37?auto=format&fit=crop&w=400&q=80" alt="Living room styled by an ORIEL customer"><span class="ig-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span></div>
+        <div class="social-item"><img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=400&q=80" alt="Bedroom styled by an ORIEL customer"><span class="ig-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span></div>
+        <div class="social-item"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=400&q=80" alt="Dining room styled by an ORIEL customer"><span class="ig-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span></div>
+        <div class="social-item"><img src="https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=400&q=80" alt="Home office styled by an ORIEL customer"><span class="ig-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span></div>
+        <div class="social-item"><img src="https://images.unsplash.com/photo-1502005229762-cf1b2da7c5d6?auto=format&fit=crop&w=400&q=80" alt="Reading nook styled by an ORIEL customer"><span class="ig-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span></div>
+        <div class="social-item"><img src="https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=400&q=80" alt="Entryway styled by an ORIEL customer"><span class="ig-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== CTA ============================== -->
+  <section class="cta-band">
+    <img src="https://images.unsplash.com/photo-1616627561950-9f746e330187?auto=format&fit=crop&w=1600&q=80" alt="Minimal, sunlit living room">
+    <div class="wrap cta-inner reveal-on-scroll reveal">
+      <h2>Your space deserves something better.</h2>
+      <a href="#shop" class="btn btn-inverse">Explore furniture <svg viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5.5h13M8 1l5 4.5-5 4.5"/></svg></a>
+    </div>
+  </section>
+
+  <!-- ============================== FAQ ============================== -->
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="faq-layout">
+        <div class="reveal-on-scroll reveal">
+          <span class="label">Good to know</span>
+          <h2 style="margin-top:18px; font-size:clamp(1.8rem,3.2vw,2.4rem);">Questions, answered.</h2>
+        </div>
+        <div class="faq-list reveal-on-scroll reveal">
+          <div class="faq-item">
+            <button class="faq-q">Do you offer Cash on Delivery?<span class="faq-plus">+</span></button>
+            <div class="faq-a"><p>Yes — COD is available on orders under ₹50,000 in serviceable pincodes across India.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How long does delivery take?<span class="faq-plus">+</span></button>
+            <div class="faq-a"><p>Most in-stock pieces arrive in 7–12 working days. Made-to-order items take 4–6 weeks, and we'll keep you updated throughout.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Do you deliver across India?<span class="faq-plus">+</span></button>
+            <div class="faq-a"><p>We offer white-glove delivery and assembly in 40+ cities, and padded courier delivery everywhere else we ship.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">Can I customize a product?<span class="faq-plus">+</span></button>
+            <div class="faq-a"><p>Most seating and case goods are available in alternate finishes and fabrics — reach out and our design team will guide you.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">What is your return policy?<span class="faq-plus">+</span></button>
+            <div class="faq-a"><p>14 days from delivery for a full refund on unused items in original packaging. Made-to-order pieces are final sale.</p></div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-q">How do I care for the furniture?<span class="faq-plus">+</span></button>
+            <div class="faq-a"><p>Every piece ships with a care card. In general: dust wood with a dry cloth, blot fabric spills immediately, and re-oil wood surfaces yearly.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================== NEWSLETTER ============================== -->
+  <section class="newsletter section">
+    <div class="wrap" style="max-width:640px;">
+      <h2>Stay close to good design.</h2>
+      <form class="nl-form" id="nlForm">
+        <input type="email" placeholder="Your email address" required>
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="nl-note">One email a month. No spam, unsubscribe any time.</p>
+      <p class="nl-success" id="nlSuccess">You're on the list — welcome to ORIEL.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================== FOOTER ============================== -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h5>ORIEL</h5>
+        <p>Furniture designed around how rooms are actually lived in. Made from solid materials, delivered across India.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 9h3V6h-3a4 4 0 00-4 4v2H7v3h3v6h3v-6h3l1-3h-4v-2a1 1 0 011-1z"/></svg></a>
+          <a href="#" aria-label="Pinterest"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 17c1-3 1.5-5 2-8a2.5 2.5 0 115 .5c0 2-1 4-3 4"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="#shop" data-cat-link="living">Living</a></li>
+          <li><a href="#shop" data-cat-link="bedroom">Bedroom</a></li>
+          <li><a href="#shop" data-cat-link="dining">Dining</a></li>
+          <li><a href="#shop" data-cat-link="office">Office</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#craft">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#">Shipping</a></li>
+          <li><a href="#">Returns</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#contact">FAQ</a></li>
+          <li><a href="#">Care Guide</a></li>
+          <li><a href="#">Track Order</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 ORIEL Living Pvt. Ltd.</span>
+      <div style="display:flex; gap:20px;">
+        <a href="#">Privacy</a><a href="#">Terms</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================== CART DRAWER ============================== -->
+<div class="overlay-bg" id="overlayBg"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="Shopping bag">
+  <div class="cart-head">
+    <h3>Your bag</h3>
+    <button class="close-btn" id="cartClose" aria-label="Close bag"><span></span><span></span></button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="cart-subtotal"><span>Subtotal</span><span id="cartSubtotal">₹0</span></div>
+    <button class="btn btn-primary">Checkout <svg viewBox="0 0 15 11" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M0 5.5h13M8 1l5 4.5-5 4.5"/></svg></button>
+  </div>
+</aside>
+
+<!-- ============================== SEARCH OVERLAY ============================== -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="close-btn" id="searchClose" aria-label="Close search"><span></span><span></span></button>
+  <div class="search-box">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input type="text" id="searchInput" placeholder="Search sofas, tables, chairs…">
+  </div>
+  <p class="search-hint">Try "dining table" or "accent chair"</p>
 </div>
 
-<div class="popup-bg" id="popupBg">
+<!-- ============================== TOAST ============================== -->
+<div class="toast" id="toast"></div>
 
-<div class="popup">
-
-<h2>Your Secret Player</h2>
-
-<img id="popupImg">
-
-</div>
-
-</div>
-
-<script>
-
-const players = [];
-
-for(let i = 1; i <= 27; i++){
-    players.push(`players/player${i}.jpg`);
-}
-
-const grid =
-document.getElementById("grid");
-
-const remaining =
-document.getElementById("remaining");
-
-let currentPlayer = null;
-let previousPlayer = null;
-
-players.forEach(src=>{
-
-    const img =
-    document.createElement("img");
-
-    img.src = src;
-
-    img.className = "card";
-
-    img.addEventListener("click",()=>{
-
-        img.classList.toggle("eliminated");
-
-        updateCounter();
-
-    });
-
-    grid.appendChild(img);
-
-});
-
-function updateCounter(){
-
-    const count =
-    document.querySelectorAll(
-        ".card:not(.eliminated)"
-    ).length;
-
-    remaining.textContent = count;
-
-}
-
-updateCounter();
-
-function generatePlayer(){
-
-    let available =
-    players.filter(
-        p => p !== previousPlayer
-    );
-
-    currentPlayer =
-    available[
-        Math.floor(
-            Math.random()*available.length
-        )
-    ];
-
-    previousPlayer =
-    currentPlayer;
-
-}
-
-const popupBg =
-document.getElementById("popupBg");
-
-const popupImg =
-document.getElementById("popupImg");
-
-document
-.getElementById("showBtn")
-.addEventListener("click",()=>{
-
-    if(currentPlayer===null){
-
-        generatePlayer();
-
-    }
-
-    popupImg.src =
-    currentPlayer;
-
-    popupBg.style.display =
-    "flex";
-
-});
-
-popupBg.addEventListener("click",(e)=>{
-
-    if(e.target===popupBg){
-
-        popupBg.style.display =
-        "none";
-
-    }
-
-});
-
-document
-.getElementById("finishBtn")
-.addEventListener("click",()=>{
-
-    document
-    .querySelectorAll(".card")
-    .forEach(card=>{
-
-        card.classList.remove(
-            "eliminated"
-        );
-
-    });
-
-    currentPlayer = null;
-
-    updateCounter();
-
-    alert(
-        "New round started! Click 'See Your Player'."
-    );
-
-});
-
-</script>
-
+<script src="js/main.js"></script>
 </body>
 </html>
