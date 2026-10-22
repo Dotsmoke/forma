@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact Us | Vanaushadhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="common.js" defer></script></head>
+<body data-page="contact">
+<main class="wrap">
+<div class="ptitle"><h1>We’d love to hear from you</h1><p>Questions about a product, an order or which herb to start with? Send us a note.</p></div>
+<section class="sec cgrid"><div class="info"><h2>Contact details</h2><p style="margin-bottom:10px">We reply within one working day.</p>
+<a id="cMail" href="#"><i class="fa-solid fa-envelope"></i><span></span></a><a id="cTel" href="#"><i class="fa-solid fa-phone"></i><span></span></a><a id="cWa" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i><span>Chat on WhatsApp</span></a><a id="cLoc" href="#"><i class="fa-solid fa-location-dot"></i><span></span></a></div>
+<form class="form" id="cform" novalidate><div class="two"><label>Name<input name="name" autocomplete="name"></label><label>Email<input name="email" type="email" autocomplete="email"></label></div>
+<label>Phone (optional)<input name="phone" type="tel" autocomplete="tel"></label><label>Message<textarea name="message"></textarea></label>
+<p class="fmsg" id="fmsg" role="status"></p><div class="ctas"><button class="btn" type="submit" data-send="wa"><i class="fa-brands fa-whatsapp"></i>Send on WhatsApp</button><button class="btn ghost" type="submit" data-send="mail"><i class="fa-solid fa-envelope"></i>Send by email</button></div></form></section>
+</main>
+<script>addEventListener('DOMContentLoaded',()=>{const C=CONFIG,s=(id,h,t)=>{const a=document.getElementById(id);if(h)a.href=h;a.querySelector('span').textContent=t||a.querySelector('span').textContent};
+s('cMail','mailto:'+C.EMAIL,C.EMAIL);s('cTel','tel:'+C.PHONE.replace(/\s/g,''),C.PHONE);s('cWa','https://wa.me/'+C.WHATSAPP);s('cLoc','https://maps.google.com/?q='+encodeURIComponent(C.ADDRESS),C.ADDRESS)})</script>
+</body></html>

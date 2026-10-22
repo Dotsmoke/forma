@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Checkout | Vanaushadhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&family=Marcellus&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="style.css">
+<script src="common.js" defer></script></head>
+<body data-page="checkout">
+<main class="wrap">
+<div class="ptitle"><h1>Checkout</h1><p>Tell us where to deliver. Takes under a minute.</p></div>
+<section class="sec" id="coBox"><div class="cartgrid">
+<form class="form" id="coForm" novalidate><h2 style="font-size:1.5rem;margin:0">Delivery details</h2>
+<div class="two"><label>Full name<input name="name" autocomplete="name"></label><label>Mobile number<input name="phone" type="tel" inputmode="tel" autocomplete="tel"></label></div>
+<label>Delivery address<textarea name="address" autocomplete="street-address" placeholder="House, street, area, city, state, pincode"></textarea></label>
+<fieldset class="opts"><legend>Payment method</legend>
+<label class="opt"><input type="radio" name="pm" value="COD" checked><span><b>Cash on delivery</b><small>Pay when your order arrives</small></span></label>
+<label class="opt"><input type="radio" name="pm" value="UPI"><span><b>UPI</b><small>Pay to <b id="upiId"></b>, then enter the transaction ID</small></span></label></fieldset>
+<label id="txnWrap" hidden>UPI transaction ID<input name="txn" autocomplete="off"></label>
+<p class="fmsg" id="coMsg" role="status"></p><button class="btn" type="submit">Place order</button></form>
+<aside class="sum" id="coSum" aria-label="Order summary"></aside></div></section>
+<section class="sec narrow" id="coDone" hidden><div class="empty" style="text-align:left;padding:32px"><i class="fa-solid fa-circle-check" style="font-size:2.2rem;color:var(--leaf)"></i><h2 style="margin:10px 0 6px">Order placed. Thank you!</h2><p>Your order ID is <b id="coId" style="color:var(--moss)"></b>. We’ll contact you on your mobile number to confirm delivery.</p><p id="coDemo" hidden style="margin-top:8px"><b>Demo mode:</b> no order was saved because <code>SHEET_API_URL</code> is not set in common.js.</p><div class="ctas" style="margin-top:18px"><a class="btn" id="coWa" href="#" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i>Message us on WhatsApp</a><a class="btn ghost" href="index.html">Back to home</a></div></div></section>
+</main>
+</body></html>
