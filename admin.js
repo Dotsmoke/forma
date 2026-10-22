@@ -101,9 +101,11 @@ ${pend?`<div class="box" style="background:var(--rose-l)"><h3 style="color:var(-
 <div class="box"><h3>Customer</h3><dl class="kv"><dt>Name</dt><dd>${esc(name)}</dd><dt>Phone</dt><dd>${esc(phone)}</dd>${g(o,'Email')?`<dt>Email</dt><dd>${esc(g(o,'Email'))}</dd>`:''}<dt>Address</dt><dd>${esc(addr)}</dd><dt>Placed</dt><dd>${esc(g(o,'Date'))}</dd></dl></div>
 <div class="box items"><h3>Items</h3>${lines||'<p class="muted">No items recorded.</p>'}<div class="tot"><span>Total</span><span>${inr(num(g(o,'Subtotal')))}</span></div></div>
 <div class="box"><h3>Payment &amp; shipping</h3><dl class="kv"><dt>Method</dt><dd>${esc(g(o,'Payment Method'))}</dd>${ps?`<dt>Payment</dt><dd>${esc(ps)}</dd>`:''}${ss?`<dt>Shipping</dt><dd>${esc(ss)}</dd>`:''}${g(o,'Transaction ID')?`<dt>UPI txn ID</dt><dd>${esc(g(o,'Transaction ID'))}</dd>`:''}</dl></div>
+<div class="box"><h3>Shipping label <span class="hint">(4 × 6 in, PDF)</span></h3><div class="acts"><button class="btn sm" type="button" id="lblDl"><i class="fa-solid fa-file-arrow-down"></i>Download PDF</button><button class="btn ghost sm" type="button" id="lblPr"><i class="fa-solid fa-print"></i>Print</button></div></div>
 <div class="box"><h3>Tracking <span class="hint">(optional, for your records)</span></h3><div style="display:grid;gap:10px"><label>AWB / tracking number<input id="tAwb" value="${esc(g(o,'AWB Number'))}"></label><label>Tracking link<input id="tUrl" type="url" placeholder="https://…" value="${esc(g(o,'Tracking URL'))}"></label><div class="acts"><button class="btn ghost sm" type="button" id="tSave">Save tracking</button>${g(o,'Tracking URL')?`<a class="btn ghost sm" target="_blank" rel="noopener" href="${esc(g(o,'Tracking URL'))}">Open link</a>`:''}</div></div></div>
 ${extra.length?`<div class="box"><h3>Other details</h3><dl class="kv">${extra.map(k=>`<dt>${esc(k)}</dt><dd>${esc(o[k])}</dd>`).join('')}</dl></div>`:''}`);
   $('#cpAddr').onclick=async()=>{try{await navigator.clipboard.writeText(`${name}\n${addr}\n${phone}`);toast('Address copied')}catch{toast('Could not copy',true)}};
+  $('#lblDl').onclick=()=>shipLabel(o,'download');$('#lblPr').onclick=()=>shipLabel(o,'print');
   const oid=String(g(o,'Order ID'));
   if(pend)$('#vPay').onclick=async()=>{const b=$('#vPay');b.disabled=true;try{await api('verifyPayment',{row:o._row,orderId:oid});o['Payment Status']='PAID - VERIFIED';if(/^ON HOLD/i.test(String(g(o,'Shipping Status'))))o['Shipping Status']='PENDING SHIPROCKET';toast('Payment marked as verified');renderStats();renderOrders();openOrder(row)}catch(x){toast(x.message,true);b.disabled=false}};
   $('#tSave').onclick=async()=>{const b=$('#tSave');b.disabled=true;try{await api('setTracking',{row:o._row,orderId:oid,awb:$('#tAwb').value,url:$('#tUrl').value});o['AWB Number']=$('#tAwb').value.trim();o['Tracking URL']=$('#tUrl').value.trim();toast('Tracking saved')}catch(x){toast(x.message,true)}b.disabled=false};
@@ -190,6 +192,79 @@ ${row?`<div id="delBox"><button class="btn danger sm" type="button" id="delBtn">
     const b=$('#fSave');b.disabled=true;b.innerHTML='<i class="fa-solid fa-spinner fa-spin"></i>Saving…';
     try{await api('saveProduct',{row:p._row||0,id:p.id!==undefined?String(p.id):'',product});toast(row?'Changes saved':'Product added');closeDrawer(true);await load(true)}
     catch(x){toast(x.message,true);b.disabled=false;b.innerHTML=`<i class="fa-solid fa-check"></i>${row?'Save changes':'Add product'}`}}}
+
+/* ================= SHIPPING LABEL (PDF) ================= */
+/* EDIT THIS: your return / pickup address, printed in the "FROM" box */
+const SHIP_FROM={name:'Marsuki',lines:['Ambalappuzha','Alappuzha, Kerala - 688561'],phone:'+91 00000 00000'};
+let lblLost=false;
+const lat=s=>String(s??'').replace(/₹/g,'Rs.').replace(/[–—]/g,'-').replace(/[‘’]/g,"'").replace(/[“”]/g,'"').replace(/\u00A0/g,' ').replace(/[^\x00-\xFF]/g,()=>{lblLost=true;return ''}).trim();
+function shipLabel(o,mode){
+  const lib=window.jspdf&&window.jspdf.jsPDF;
+  if(!lib)return toast('PDF tool did not load. Check your internet and refresh the page.',true);
+  if(pendingPay(o)&&!confirm('This UPI payment is not verified yet. Make the label anyway?'))return;
+  lblLost=false;
+  try{
+    const W=101.6,H=152.4,X=6,CW=W-12,doc=new lib({unit:'mm',format:[W,H],orientation:'portrait'});
+    const id=String(g(o,'Order ID')||'ORDER-'+o._row),cod=/cash on delivery|^cod/i.test(String(g(o,'Payment Method'))),amt=num(g(o,'Subtotal'));
+    const put=(t,sz,b,yy,x=X,col=0)=>{doc.setFont('helvetica',b?'bold':'normal');doc.setFontSize(sz);doc.setTextColor(col);const ls=doc.splitTextToSize(lat(t),CW-(x-X)),lh=sz*.3528*1.25;doc.text(ls,x,yy+sz*.3528);return yy+ls.length*lh};
+    const hr=yy=>{doc.setLineWidth(.3);doc.setDrawColor(0);doc.line(2,yy,W-2,yy)};
+    doc.setDrawColor(0);doc.setLineWidth(.6);doc.rect(2,2,W-4,H-4);
+
+    /* header */
+    put(SHIP_FROM.name,14,true,5);
+    doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(90);
+    doc.text(lat(String(g(o,'Date')).split(',')[0]),W-X,9.5,{align:'right'});
+    doc.text('SHIPPING LABEL',W-X,5.8,{align:'right'});
+    hr(14);
+
+    /* deliver to */
+    let y=put('DELIVER TO',7,true,16,X,110);
+    y=put(g(o,'Name'),15,true,y+.5);
+    y=put([g(o,'Address'),g(o,'Address Line 2')].filter(a=>String(a).trim()).join(', '),10.5,false,y+1);
+    const cityLine=[g(o,'City'),g(o,'State / Province')].filter(a=>String(a).trim()).join(', ')+(g(o,'Postal Code')?' - '+g(o,'Postal Code'):'');
+    y=put(cityLine,12.5,true,y+1);
+    const ctry=String(g(o,'Country')||'India');if(!/^india$/i.test(ctry.trim()))y=put(ctry,10.5,true,y);
+    y=put('Ph: '+g(o,'Phone'),12,true,y+1.5);
+    y+=2;hr(y);
+
+    /* payment strip */
+    doc.setFillColor(0);doc.rect(2,y,W-4,11,'F');
+    doc.setTextColor(255);doc.setFont('helvetica','bold');doc.setFontSize(14);
+    doc.text(cod?'COD - COLLECT Rs. '+amt.toLocaleString('en-IN'):'PREPAID - DO NOT COLLECT',W/2,y+7.4,{align:'center'});
+    y+=11;
+
+    /* weight + order id */
+    const wt=num(g(o,'Total Weight (kg)'));
+    y=put('Weight: '+(wt?wt+' kg':'-')+'     Order: '+id,8.5,true,y+2);
+    y+=1;hr(y);
+
+    /* contents */
+    const maxY=H-58;
+    y=put('CONTENTS',7,true,y+1.5,X,110);
+    const its=itemLines(o).filter(x=>!/^delivery\b/i.test(x)).map(x=>x.replace(/\s*=\s*₹.*$/,''));
+    for(let i=0;i<its.length;i++){
+      if(y>maxY-4){put('+ '+(its.length-i)+' more item'+(its.length-i>1?'s':''),8.5,true,y);break}
+      y=put(its[i],9,false,y);
+    }
+
+    /* barcode */
+    const by=H-50;hr(by-2);
+    try{const cv=document.createElement('canvas');JsBarcode(cv,id,{format:'CODE128',displayValue:false,margin:0,height:60,width:2});
+      doc.addImage(cv.toDataURL('image/png'),'PNG',X+2,by,CW-4,13)}catch{}
+    doc.setTextColor(0);doc.setFont('helvetica','bold');doc.setFontSize(9);doc.text(lat(id),W/2,by+17.5,{align:'center'});
+
+    /* from */
+    hr(H-31);
+    let fy=put('FROM (SENDER)',7,true,H-29.5,X,110);
+    fy=put(SHIP_FROM.name,9,true,fy);
+    fy=put(SHIP_FROM.lines.join(', '),8.5,false,fy);
+    put('Ph: '+SHIP_FROM.phone,8.5,false,fy);
+
+    if(lblLost)toast('Some special characters (e.g. non-English letters) could not be printed on the label.',true);
+    if(mode==='print'){doc.autoPrint();const w=window.open(doc.output('bloburl'),'_blank');if(!w)toast('Allow pop-ups to print, or use Download PDF.',true)}
+    else{doc.save('Label-'+id.replace(/[^\w.-]/g,'_')+'.pdf');if(!lblLost)toast('Label downloaded')}
+  }catch(x){console.error(x);toast('Could not create the label: '+x.message,true)}
+}
 
 /* ================= BOOT ================= */
 if(S.token){showApp(true);load()}else showApp(false);
